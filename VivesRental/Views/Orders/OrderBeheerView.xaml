@@ -1,0 +1,69 @@
+﻿<UserControl x:Class="VivesRental.Views.Orders.OrderBeheerView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:order="clr-namespace:VivesRental.ViewModels.Order"
+             mc:Ignorable="d"
+             d:DesignHeight="450" d:DesignWidth="800"
+             d:DataContext="{d:DesignInstance {x:Type order:OrderBeheerViewModel}, IsDesignTimeCreatable=False}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock FontWeight="Bold" Text="{Binding amountOrders}" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="1"></TextBlock>
+        <TextBlock FontWeight="Bold" Text="Amount of orders:" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0"></TextBlock>
+
+        <TextBlock FontWeight="Bold" Text="{Binding amountOpenOrders}" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="1"></TextBlock>
+        <TextBlock FontWeight="Bold" Text="Amount of open orders:" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0"></TextBlock>
+
+        <Button Foreground="White" FontWeight="Bold" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Command="{Binding NavigateToCreateOrder}" Background="#2ea851" Content="Go to Create order"></Button>
+
+        <DataGrid Grid.Row="3"
+          Grid.Column="0"
+          Grid.ColumnSpan="2" Grid.RowSpan="2" 
+          ItemsSource="{Binding Orders}" 
+          SelectedItem="{Binding SelectedOrderResult}"
+          CanUserAddRows="False"
+          AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Width="2*"  Header="Order number" Binding="{Binding Id}"/>
+                <DataGridTextColumn Width="*" Header="Customer" Binding="{Binding CustomerFirstName}"/>
+                <DataGridTextColumn Width="*" Header="Order Date" Binding="{Binding CreatedAt}"/>
+                <DataGridTextColumn Width="*" Header="Returned At" Binding="{Binding ReturnedAt}"/>
+                <DataGridTemplateColumn  Width="100" Header="Detail">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Detail" 
+                                    Background="CornflowerBlue" 
+                                    Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=DataContext.NavigateToDetailCommand}"
+                                    CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn  Width="150" Header="Return">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Return Order" Background="Yellow" 
+                                    Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=DataContext.ReturnOrderCommand}"
+                            />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+            </DataGrid.Columns>
+        </DataGrid>
+
+
+    </Grid>
+</UserControl>

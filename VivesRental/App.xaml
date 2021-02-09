@@ -1,0 +1,67 @@
+﻿<Application x:Class="VivesRental.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:customer="clr-namespace:VivesRental.ViewModels.Customer"
+             xmlns:order="clr-namespace:VivesRental.ViewModels.Order"
+             xmlns:product="clr-namespace:VivesRental.ViewModels.Product"
+             xmlns:views="clr-namespace:VivesRental.Views"
+             xmlns:customers="clr-namespace:VivesRental.Views.Customers"
+             xmlns:klanten="clr-namespace:VivesRental.Views.Klanten"
+             xmlns:orders="clr-namespace:VivesRental.Views.Orders"
+             xmlns:products="clr-namespace:VivesRental.Views.Products"
+             xmlns:dashboard="clr-namespace:VivesRental.ViewModels.Dashboard">
+
+    <Application.Resources>
+        <ResourceDictionary>
+
+            <DataTemplate DataType="{x:Type dashboard:DashboardViewModel}">
+                <views:DashboardView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type customer:KlantBeheerViewModel}">
+                <klanten:KlantBeheerView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type customer:KlantToevoegenViewModel}">
+                <klanten:KlantToevoegenView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type customer:KlantDetailViewModel}">
+                <customers:KlantDetailView />
+            </DataTemplate>
+
+
+            <DataTemplate DataType="{x:Type order:OrderBeheerViewModel}">
+                <orders:OrderBeheerView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type order:OrderCreateViewModel}">
+                <orders:OrderCreateView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type order:OrderSelectCustomerViewModel}">
+                <orders:OrderSelectCustomerView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type order:OrderDetailViewModel}">
+                <orders:OrderDetailView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type product:ProductBeheerViewModel}">
+                <products:ProductBeheerView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type product:ProductDetailViewModel}">
+                <products:ProductDetailview />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type product:ProductCreateViewModel}">
+                <products:ProductCreateView />
+            </DataTemplate>
+
+            <ResourceDictionary.MergedDictionaries>
+                <!--MahApps.Metro resource dictionaries. Make sure that all file names are Case Sensitive!-->
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatButton.xaml" />
+                <!--Accent and AppTheme setting-->
+                <ResourceDictionary
+                    Source="pack://application:,,,/MahApps.Metro;component/Styles/Themes/light.blue.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

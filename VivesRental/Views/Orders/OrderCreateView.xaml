@@ -1,0 +1,98 @@
+﻿<UserControl x:Class="VivesRental.Views.Orders.OrderCreateView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:order="clr-namespace:VivesRental.ViewModels.Order"
+             mc:Ignorable="d"
+             d:DesignHeight="720" d:DesignWidth="1280"
+             d:DataContext="{d:DesignInstance {x:Type order:OrderCreateViewModel}, IsDesignTimeCreatable=False}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30" />
+            <RowDefinition Height="30" />
+            <RowDefinition Height="30" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="30" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="30" />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center"
+                   VerticalAlignment="Center" FontSize="20">
+            Creating an order
+        </TextBlock>
+        <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center">Customer:</TextBlock>
+        <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Customer.FirstName}" />
+        <TextBlock Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Left"
+                   VerticalAlignment="Center">
+            Available products
+        </TextBlock>
+
+
+        <DataGrid ItemsSource="{Binding Products}"
+                  SelectedItem="{Binding SelectedProductResult}"
+                  Grid.Row="3"
+                  Grid.ColumnSpan="2"
+                  CanUserAddRows="False"
+                  AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Width="*" Header="Product name" Binding="{Binding Name}" />
+                <DataGridTextColumn Width="*" Header="Description" Binding="{Binding Description}" />
+                <DataGridTextColumn Width="*" Header="Amount in stock" Binding="{Binding NumberOfArticles}" />
+                <DataGridTemplateColumn Width="100" Header="Add">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Background="LightBlue" Content="Add"
+                                    Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=DataContext.ToevoegenArticleCommand}"
+                                    CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+
+        <TextBlock Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Left"
+                   VerticalAlignment="Center">
+            Order
+        </TextBlock>
+
+
+        <DataGrid ItemsSource="{Binding Reservation}"
+                  SelectedItem="{Binding SelectedReservationResult}"
+                  Grid.Row="5"
+                  Grid.Column="0"
+                  Grid.ColumnSpan="2"
+                  CanUserAddRows="false"
+                  VerticalScrollBarVisibility="Auto"
+                  AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Width="*" Header="Product Name" Binding="{Binding ProductName}" />
+                <DataGridTextColumn Width="*" Header="Reservated at" Binding="{Binding FromDateTime}" />
+                <DataGridTextColumn Width="*" Header="Expires at" Binding="{Binding UntilDateTime}" />
+                <DataGridTemplateColumn Width="100" Header="Remove">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Background="IndianRed" Content="Remove"
+                                    Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=DataContext.DeleteReservationCommand}"
+                                    CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Button Grid.Row="6" Grid.Column="1" Background="#2ea851" Command="{Binding CreateOrderCommand}"
+                Foreground="White" FontWeight="Bold">
+            Add
+        </Button>
+        <Button Grid.Row="6" Grid.Column="0" Background="#e3402f" Foreground="White" FontWeight="Bold">Cancel</Button>
+
+    </Grid>
+</UserControl>
